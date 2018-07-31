@@ -7,62 +7,69 @@ module.exports = function crateConfig() {
   const dest = path.join(workingDir, 'dist/');
   const out = path.join(workingDir, 'out/');
   const temp = path.join(workingDir, '.temp/');
-  const node_modules = path.join(workingDir,'node_modules/');
+  const nodeDir = path.join(workingDir, 'node_modules/');
   const client = path.join(root, 'client/');
   const clientApp = path.join(client, 'app/');
   const index = path.join(client, 'index.html');
-  const specRunnerFile = path.join(root, 'specs.html');
   const server = path.join(root, 'server/');
 
-  var config = {
-    allTests: [
-      client + '**/*.tests.js',
-      client + '**/*.spec.js'
+  const config = {
+    allTs: [
+      root + '**/*.ts',
+      './*.ts'
     ],
+
+    /**
+     *  packagejson which will be copied in destination folder
+     */
+    appPackageJson: path.join(clientApp, 'package.json'),
+
+    /**
+     *  time to load browser sync
+    */
     browserReloadDelay: 1000,
+
     client: client,
     clientApp: clientApp,
+
+    /**
+     * folder location where build artifacts will go
+     */
     dest: dest,
-    filesToWatch: [
-      path.join(clientApp, '**/*.js'),
-      path.join(clientApp, '**/*.html'),
-      path.join(clientApp, '**/*.css'),
-      index,
-    ],
-    icon: path.join(__dirname, './gulp.png'),
     html: clientApp + '**/*.html',
+    icon: path.join(__dirname, './gulp.png'),
     index: index,
     less: [],
     nodeServer: './src/server/app.js',
+    nodeModules: [
+
+    ],
+    localModules: [
+      nodeDir + 'my-sample-module/**/*.*'
+    ],
     out: out,
     optimized: {
       app: 'app.js',
       lib: 'lib.js'
     },
-    port: 2334,
+    port: 2321,
     root: root,
     server: server,
     serverIntegrationSpecs: [],
-    specRunner: specRunnerFile,
-    shouldUseroot: false,
+    specRunner: '',
     specHelpers: [client + 'test-helpers/*.js'],
     temp: temp,
-    watchFiles: [
-      node_modules+'gulp-angularjs-typescript-server/dist/app.js',
-      '!' + clientApp + "**/*spec.ts",
+    ts: [
       clientApp + "**/*.ts",
-      clientApp + "**/*.html",
-      index
+      '!' + clientApp + "**/*.spec.ts"
     ],
-    watchFilesForTest: [
-      clientApp + "**/*spec.ts",
-      clientApp + "**/*.ts",
-      clientApp + "**/*.html",
-      index
+    testTs: [
+      clientApp + "**/*.spec.ts",
     ]
   };
 
   config.karma = getKarmaOptions();
+
   return config;
 
   function getKarmaOptions() {

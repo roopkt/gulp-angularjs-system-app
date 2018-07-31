@@ -11,7 +11,7 @@ describe('contactcomponent', () => {
         scope = $rootScope.$new();
         controller = $controller('contactController', {
           $scope: scope,
-        });
+        });   
       });
   });
 
