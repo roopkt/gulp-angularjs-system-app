@@ -52,7 +52,7 @@ module.exports = function crateConfig() {
       app: 'app.js',
       lib: 'lib.js'
     },
-    port: 2321,
+    port: 2541,
     root: root,
     server: server,
     serverIntegrationSpecs: [],
