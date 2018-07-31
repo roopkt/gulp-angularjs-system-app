@@ -11,8 +11,8 @@
     "test:sr": "gulp test --tsconfig tsconfig.test.json",
     "serve:build": "gulp serve --prod",
     "serve:dev": "gulp serve --dev",
-    "link:modules": "npm link my-sample-module",
-    "serve:link": "run-s link:modules serve:dev"
+    "linked:in": "npm link my-sample-module",
+    "serve:link": "run-s linked:in serve:dev"
   },
   "keywords": [],
   "author": "",
