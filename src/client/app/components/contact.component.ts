@@ -1,20 +1,16 @@
 module MySample {
   export interface IContactScope extends ng.IScope {
-    name: string;
-    onSubmit: '&'
   }
   export class ContactController implements ng.IController {
-    lastName: string;
     $onInit() {
-      this.lastName = "Tiwari";
+      this.$scope.onSubmit = this.submit.bind(this);
     }
 
     constructor(public $scope: any) {
-      $scope.name = "Rupesh";
     }
 
-    submit() {
-      this.$scope.onSubmit(this.$scope.contactDetails);
+    submit(contactDetails: any) {
+      alert(`ARE YOU SURE TO SUBMIT THIS MESSAGE? \n Your email: ${contactDetails.email} \n Your message: ${contactDetails.message}`);
     }
   }
   Module.controller('contactController', ContactController);

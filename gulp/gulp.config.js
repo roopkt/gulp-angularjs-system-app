@@ -2,17 +2,17 @@
 module.exports = function crateConfig() {
   const path = require('path');
   const workingDir = process.cwd();
-  var root = path.join(workingDir, 'src/');
-  var report = path.join(workingDir, 'report/');
-  var dest = path.join(workingDir, 'dist/');
-  var out = path.join(workingDir, 'out/');
-  var temp = path.join(workingDir, '.temp/');
-
-  var client = path.join(root, 'client/');
-  var clientApp = path.join(client, 'app/');
-  var index = path.join(client, 'index.html');
-  var specRunnerFile = path.join(root, 'specs.html');
-  var server = path.join(root, 'server/');
+  const root = path.join(workingDir, 'src/');
+  const report = path.join(workingDir, 'report/');
+  const dest = path.join(workingDir, 'dist/');
+  const out = path.join(workingDir, 'out/');
+  const temp = path.join(workingDir, '.temp/');
+  const node_modules = path.join(workingDir,'node_modules/');
+  const client = path.join(root, 'client/');
+  const clientApp = path.join(client, 'app/');
+  const index = path.join(client, 'index.html');
+  const specRunnerFile = path.join(root, 'specs.html');
+  const server = path.join(root, 'server/');
 
   var config = {
     allTests: [
@@ -32,11 +32,6 @@ module.exports = function crateConfig() {
     icon: path.join(__dirname, './gulp.png'),
     html: clientApp + '**/*.html',
     index: index,
-    js: [
-      clientApp + '**/*.module.js',
-      clientApp + '**/*.js',
-      '!' + clientApp + '**/*.spec.js'
-    ],
     less: [],
     nodeServer: './src/server/app.js',
     out: out,
@@ -44,7 +39,7 @@ module.exports = function crateConfig() {
       app: 'app.js',
       lib: 'lib.js'
     },
-    port: 2333,
+    port: 2334,
     root: root,
     server: server,
     serverIntegrationSpecs: [],
@@ -53,6 +48,7 @@ module.exports = function crateConfig() {
     specHelpers: [client + 'test-helpers/*.js'],
     temp: temp,
     watchFiles: [
+      node_modules+'gulp-angularjs-typescript-server/dist/app.js',
       '!' + clientApp + "**/*spec.ts",
       clientApp + "**/*.ts",
       clientApp + "**/*.html",
