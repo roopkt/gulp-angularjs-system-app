@@ -5,13 +5,14 @@ module.exports = function crateConfig() {
   const root = path.join(workingDir, 'src/');
   const report = path.join(workingDir, 'report/');
   const dest = path.join(workingDir, 'dist/');
-  const out = path.join(workingDir, 'out/');
   const temp = path.join(workingDir, '.temp/');
   const nodeDir = path.join(workingDir, 'node_modules/');
   const client = path.join(root, 'client/');
   const clientApp = path.join(client, 'app/');
   const index = path.join(client, 'index.html');
   const server = path.join(root, 'server/');
+  const imagesDir = path.join(client, 'assets/images');
+  const fontsDir = path.join(client, 'assets/fonts');
 
   const config = {
     allTs: [
@@ -28,7 +29,7 @@ module.exports = function crateConfig() {
      *  time to load browser sync
     */
     browserReloadDelay: 1000,
-
+    css: temp + 'styles.css',
     client: client,
     clientApp: clientApp,
 
@@ -36,23 +37,38 @@ module.exports = function crateConfig() {
      * folder location where build artifacts will go
      */
     dest: dest,
+    fontsDir: fontsDir,
     html: clientApp + '**/*.html',
     icon: path.join(__dirname, './gulp.png'),
+    imagesDir: imagesDir,
     index: index,
-    less: [],
+    less: [
+      client + 'styles/styles.less'
+    ],
     nodeServer: './src/server/app.js',
-    nodeModules: [
+    localModules: [
 
     ],
-    localModules: [
-      nodeDir + 'my-sample-module/**/*.*'
-    ],
-    out: out,
     optimized: {
-      app: 'app.js',
-      lib: 'lib.js'
+      app: 'app.bundle.js',
+      lib: 'lib.bundle.js'
     },
-    port: 2541,
+    assets: {
+      imagesOutput: path.join(dest, 'assets/images/'),
+      fontsOutput: path.join(dest, 'assets/fonts/'),
+      thirdParty: {
+        images: [path.join(nodeDir, 'my-sample-module/assets/images/**/*.*')
+        ]
+        ,
+        fonts: [path.join(nodeDir, 'my-sample-module/assets/fonts/**/*.*')
+        ]
+      },
+      local: {
+        images: [path.join(imagesDir, '**/*.*')],
+        fonts: [path.join(fontsDir, '**/*.*')],
+      }
+    },
+    port: 2222,
     root: root,
     server: server,
     serverIntegrationSpecs: [],
@@ -75,6 +91,7 @@ module.exports = function crateConfig() {
   function getKarmaOptions() {
     var options = {
       files: [].concat(
+        clientApp + '_references.ts',
         config.specHelpers,
         workingDir + '/lib/angular/angular.js',
         workingDir + '/lib/angular/angular-route.js',
