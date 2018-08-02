@@ -21,11 +21,6 @@ module.exports = function crateConfig() {
     ],
 
     /**
-     *  packagejson which will be copied in destination folder
-     */
-    appPackageJson: path.join(clientApp, 'package.json'),
-
-    /**
      *  time to load browser sync
     */
     browserReloadDelay: 3000,
@@ -33,6 +28,13 @@ module.exports = function crateConfig() {
     client: client,
     clientApp: clientApp,
 
+    /**
+    *  files which will be copied in destination folder
+    */
+    copyToDist: [
+      path.join(clientApp, 'package.json'),
+      path.join(clientApp, 'README.md'),
+    ],
     /**
      * folder location where build artifacts will go
      */

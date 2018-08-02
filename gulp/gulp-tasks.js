@@ -68,7 +68,7 @@ function gulpTasks() {
   //TASKS
   var tasks = {
     build: gulp.series(cleanCode, gulp.parallel(
-      copyPackageJson,
+      copyArtifacts,
       gulp.series(
         fonts,
         images,
@@ -179,11 +179,11 @@ function gulpTasks() {
     clean(config.assets.fontsOutput + '**/*.*', done);
   }
 
-  function copyPackageJson(done) {
-    log('Copying package.json');
+  function copyArtifacts(done) {
+    log('Copying given artifacts to: ' + config.dest);
 
     gulp
-      .src(config.appPackageJson)
+      .src(config.copyToDist)
       .pipe(gulp.dest(config.dest));
     done();
   }
@@ -443,5 +443,9 @@ function gulpTasks() {
 
     log('watching files while serving: ' + JSON.stringify(files));
   }
+
+
+
 }
+
 module.exports = gulpTasks;
