@@ -76,6 +76,7 @@ function gulpTasks() {
         optimize,
         startBuild)
     )),
+    compile: (done) => gulp.watch([config.ts], (done) => compileOnce(done)),
     cleanCode: cleanCode,
     serve: isDev ? serveDev : serveBuild,
     styles: styles,
@@ -134,7 +135,7 @@ function gulpTasks() {
       minimize: minimize,
       jsTemplateBegin: config.jsTemplateBegin || 'template='
     };
-
+    _.assign(embedOptions, config.embedOptions);
     if (config.shouldUseBasePath) {
       embedOptions.basePath = config.basePath;
     }
@@ -148,7 +149,7 @@ function gulpTasks() {
       .pipe($.if(taskOptions.sourcemaps, $.sourcemaps.mapSources()))
       .pipe($.if(taskOptions.sourcemaps, $.sourcemaps.write()))
       .pipe($.ngAnnotate())
-      .pipe(embedTemplates(embedOptions))
+      .pipe($.if(isProd, embedTemplates(embedOptions)))
       .pipe(gulp.dest(config.root))
       .on('end', () => done())
       .on('error', (e) => done && done(e));
@@ -442,9 +443,5 @@ function gulpTasks() {
 
     log('watching files while serving: ' + JSON.stringify(files));
   }
-
-
-
 }
-
 module.exports = gulpTasks;
